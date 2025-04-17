@@ -1,6 +1,11 @@
+import 'package:fluffyn_e_commerce/bloc/authentication/auth_bloc.dart';
+import 'package:fluffyn_e_commerce/bloc/authentication/auth_event.dart';
+import 'package:fluffyn_e_commerce/bloc/authentication/auth_state.dart';
 import 'package:fluffyn_e_commerce/core/theme/app_theme.dart';
+import 'package:fluffyn_e_commerce/src/authentication/pages/auth_page.dart';
 import 'package:fluffyn_e_commerce/src/skeleton/skeleton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const ECommerceApp());
@@ -13,7 +18,23 @@ class ECommerceApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: themeData,
-      home: const Skeleton(),
+      home: BlocProvider(
+        create: (context) {
+          return AuthBloc()
+            ..add(
+              InitializeEvent(),
+            );
+        },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is SuccessState) {
+              return const Skeleton();
+            } else {
+              return const AuthPage();
+            }
+          },
+        ),
+      ),
     );
   }
 }
