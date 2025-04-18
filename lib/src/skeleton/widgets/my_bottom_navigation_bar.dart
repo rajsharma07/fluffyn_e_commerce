@@ -1,14 +1,48 @@
+import 'package:fluffyn_e_commerce/bloc/cart_bloc/cart_bloc.dart';
+import 'package:fluffyn_e_commerce/bloc/cart_bloc/cart_state.dart';
+import 'package:fluffyn_e_commerce/core/util/my_snack_bar.dart';
 import 'package:fluffyn_e_commerce/provider/selected_page_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
-  const MyBottomNavigationBar({super.key});
-  final List<BottomNavigationBarItem> items = const [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-    BottomNavigationBarItem(icon: Icon(Icons.add), label: "Products"),
-    BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Cart"),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+  MyBottomNavigationBar({super.key});
+  final List<BottomNavigationBarItem> items = [
+    const BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    const BottomNavigationBarItem(icon: Icon(Icons.add), label: "Products"),
+    BottomNavigationBarItem(
+        icon: BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (state is FailureState) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (timeStamp) {
+                  MySnackBar.showSnackBar(context,
+                      state.failure.messages ?? "Something went wrong!!!");
+                },
+              );
+            }
+            return Badge(
+              isLabelVisible:
+                  (state is SuccessState && state.cartItemsList.isNotEmpty),
+              label: (state is SuccessState)
+                  ? Text(
+                      state.cartItemsList
+                          .map(
+                            (e) => e.quantity,
+                          )
+                          .reduce(
+                            (value, element) => (value + element),
+                          )
+                          .toString(),
+                    )
+                  : null,
+              child: const Icon(Icons.shopping_cart),
+            );
+          },
+        ),
+        label: "Cart"),
+    const BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
   ];
   @override
   Widget build(BuildContext context) {

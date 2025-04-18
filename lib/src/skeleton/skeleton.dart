@@ -27,7 +27,7 @@ class Skeleton extends StatelessWidget {
             return widgets[value.getSelected()];
           },
         ),
-        bottomNavigationBar: const MyBottomNavigationBar(),
+        bottomNavigationBar: MyBottomNavigationBar(),
       ),
     );
   }

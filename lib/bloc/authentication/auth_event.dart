@@ -12,4 +12,6 @@ class RegisterEvent extends AuthEvent {
   RegisterEvent(this.email, this.password);
 }
 
+class LogoutEvent extends AuthEvent {}
+
 class InitializeEvent extends AuthEvent {}

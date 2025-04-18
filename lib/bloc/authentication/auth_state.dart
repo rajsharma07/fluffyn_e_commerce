@@ -12,6 +12,6 @@ class InitialState extends AuthState {}
 class LoadingState extends AuthState {}
 
 class FailureState extends AuthState {
-  Failures failure;
+  Failure failure;
   FailureState(this.failure);
 }

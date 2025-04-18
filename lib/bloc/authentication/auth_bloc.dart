@@ -14,7 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           if (!await SecuredStorage.isRegistered(event.email)) {
             emit(
               FailureState(
-                Failures("Email not registered!!"),
+                Failure("Email not registered!!"),
               ),
             );
           }
@@ -32,14 +32,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           } else {
             emit(
               FailureState(
-                Failures("Password or email is incorrect"),
+                Failure("Password or email is incorrect"),
               ),
             );
           }
         } catch (error) {
           emit(
             FailureState(
-              Failures("Something went wrong!"),
+              Failure("Something went wrong!"),
             ),
           );
         }
@@ -53,7 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         try {
           if ((await SecuredStorage.isRegistered(event.email)) == true) {
             emit(
-              FailureState(Failures("Email Already Registered!!")),
+              FailureState(Failure("Email Already Registered!!")),
             );
           } else {
             await SecuredStorage.addCredential(event.email, event.password);
@@ -65,7 +65,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         } catch (error) {
           emit(
             FailureState(
-              Failures("Something went wrong"),
+              Failure("Something went wrong"),
             ),
           );
         }
@@ -83,6 +83,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             SuccessState(email),
           );
         }
+      },
+    );
+
+    on<LogoutEvent>(
+      (event, emit) async {
+        emit(LoadingState());
+        SecuredStorage.logout();
+        emit(InitialState());
       },
     );
   }

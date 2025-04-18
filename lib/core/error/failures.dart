@@ -1,4 +1,4 @@
-class Failures {
+class Failure {
   String? messages;
-  Failures(this.messages);
+  Failure(this.messages);
 }

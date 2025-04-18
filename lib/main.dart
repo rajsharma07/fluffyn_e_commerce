@@ -1,6 +1,8 @@
 import 'package:fluffyn_e_commerce/bloc/authentication/auth_bloc.dart';
 import 'package:fluffyn_e_commerce/bloc/authentication/auth_event.dart';
 import 'package:fluffyn_e_commerce/bloc/authentication/auth_state.dart';
+import 'package:fluffyn_e_commerce/bloc/cart_bloc/cart_bloc.dart';
+import 'package:fluffyn_e_commerce/bloc/cart_bloc/cart_event.dart';
 import 'package:fluffyn_e_commerce/core/theme/app_theme.dart';
 import 'package:fluffyn_e_commerce/src/authentication/pages/auth_page.dart';
 import 'package:fluffyn_e_commerce/src/skeleton/skeleton.dart';
@@ -13,7 +15,6 @@ void main() {
 
 class ECommerceApp extends StatelessWidget {
   const ECommerceApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +29,12 @@ class ECommerceApp extends StatelessWidget {
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is SuccessState) {
-              return const Skeleton();
+              return BlocProvider(
+                  create: (context) => CartBloc()
+                    ..add(
+                      GetCartDataEvent(state.email),
+                    ),
+                  child: const Skeleton());
             } else {
               return const AuthPage();
             }

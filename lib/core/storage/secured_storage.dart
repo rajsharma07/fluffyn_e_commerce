@@ -33,4 +33,8 @@ class SecuredStorage {
     }
     return true;
   }
+
+  static Future<void> logout() async {
+    await storage.delete(key: "logged_id");
+  }
 }

@@ -5,14 +5,14 @@ import 'package:fluffyn_e_commerce/core/error/failures.dart';
 import 'package:http/http.dart' as http;
 
 abstract class GetRequest {
-  static Future<Either<dynamic, Failures>> getRequest(String path) async {
+  static Future<Either<dynamic, Failure>> getRequest(String path) async {
     try {
       final result = await http.get(
         Uri.parse(path),
       );
       if (result.statusCode != 200) {
         return Right(
-          Failures("Something went wrong!!"),
+          Failure("Something went wrong!!"),
         );
       } else {
         return Left(
@@ -21,7 +21,7 @@ abstract class GetRequest {
       }
     } catch (error) {
       return Right(
-        Failures("Something went wrong"),
+        Failure("Something went wrong"),
       );
     }
   }
