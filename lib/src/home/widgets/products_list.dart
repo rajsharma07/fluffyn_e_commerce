@@ -2,15 +2,12 @@ import 'package:fluffyn_e_commerce/bloc/home_page/home_page_bloc.dart';
 import 'package:fluffyn_e_commerce/bloc/home_page/home_page_event.dart';
 import 'package:fluffyn_e_commerce/bloc/home_page/home_page_state.dart';
 import 'package:fluffyn_e_commerce/core/util/my_snack_bar.dart';
-import 'package:fluffyn_e_commerce/src/home/widgets/product_tile.dart';
+import 'package:fluffyn_e_commerce/src/home/widgets/products_list_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsList extends StatelessWidget {
   const ProductsList({super.key});
-  void _refresh(BuildContext ctx) {
-    ctx.read<HomePageBloc>().add(GetDataEvent());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +33,7 @@ class ProductsList extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (state is SuccessState) {
-          return RefreshIndicator(
-            onRefresh: () async {
-              _refresh(context);
-            },
-            child: ListView.builder(
-              itemCount: state.products.length,
-              itemBuilder: (context, index) {
-                return ProductTile(state.products[index]);
-              },
-            ),
-          );
+          return ProductsListViewWidget(state.products);
         }
         return Center(
           child: TextButton(
