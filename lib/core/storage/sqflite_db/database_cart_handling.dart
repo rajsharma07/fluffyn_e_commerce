@@ -1,5 +1,6 @@
 import 'package:fluffyn_e_commerce/core/storage/sqflite_db/database_helper.dart';
 import 'package:fluffyn_e_commerce/model/cart_item_model.dart';
+import 'package:fluffyn_e_commerce/model/transaction_model.dart';
 
 Future<void> addToCart(CartItemModel cartItem) async {
   final db = await DatabaseHelper.instance.database;
@@ -57,4 +58,27 @@ Future<CartItemModel?> getProductFromCart(int productId, String email) async {
     whereArgs: [productId, email],
   );
   return result.isEmpty ? null : CartItemModel.fromMap(result[0]);
+}
+
+Future<void> storeTransaction(
+    TransactionModel transaction, String email) async {
+  final db = await DatabaseHelper.instance.database;
+  await db.insert("transactions", {
+    "user_id": email,
+    "product_id": transaction.productId,
+    "quantity": transaction.quantity,
+    "price": transaction.price,
+    "date": transaction.date.toString()
+  });
+}
+
+Future<List<TransactionModel>> getTransaction(String email) async {
+  final db = await DatabaseHelper.instance.database;
+  final result =
+      await db.query("transactions", where: "user_id = ?", whereArgs: [email]);
+  return result.map(
+    (e) {
+      return TransactionModel.fromMap(e);
+    },
+  ).toList();
 }

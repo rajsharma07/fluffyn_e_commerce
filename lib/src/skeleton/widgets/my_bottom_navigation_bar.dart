@@ -25,7 +25,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             return Badge(
               isLabelVisible:
                   (state is SuccessState && state.cartItemsList.isNotEmpty),
-              label: (state is SuccessState)
+              label: (state is SuccessState && state.cartItemsList.isNotEmpty)
                   ? Text(
                       state.cartItemsList
                           .map(
