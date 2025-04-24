@@ -15,7 +15,7 @@ Future<void> removeCartData(int productId, String email) async {
   final db = await DatabaseHelper.instance.database;
   db.delete(
     "cart",
-    where: 'email = ? AND product_id = ?',
+    where: 'user_id = ? AND product_id = ?',
     whereArgs: [email, productId],
   );
 }

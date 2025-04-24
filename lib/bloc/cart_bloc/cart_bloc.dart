@@ -183,6 +183,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 date: DateTime.now(),
               ),
               event.email);
+          removeCartData(item.productId, event.email);
           event.items.removeWhere(
             (element) => element.productId == event.checkList[i],
           );
