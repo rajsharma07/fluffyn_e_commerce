@@ -38,7 +38,7 @@ This project, named *fluffyn_e_commerce*, is built with Flutter and targets Andr
    ```  
 
 ## Project Structure  
-
+```
 lib/
 ├─ core/            # Utilities, theming, storage & http helpers
 ├─ bloc/            # Business logic components for auth, cart, products
@@ -46,4 +46,4 @@ lib/
 ├─ provider/        # ChangeNotifier providers for UI state
 ├─ src/             # Feature modules: authentication, products, cart, profile, skeleton
 ├─ main.dart        # App entry point with root BlocProviders
-
+```
