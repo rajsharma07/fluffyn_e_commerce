@@ -1,11 +1,13 @@
+import 'package:fluffyn_e_commerce/model/user_model.dart';
+
 abstract class ProfilePageEvent {}
 
-class GetUserData extends ProfilePageEvent {
+class GetUserDataEvent extends ProfilePageEvent {
   String email;
-  GetUserData(this.email);
+  GetUserDataEvent(this.email);
 }
 
-class UpdatePhoneNumber extends ProfilePageEvent {
-  String email;
-  UpdatePhoneNumber(this.email);
+class UpdateUserEvent extends ProfilePageEvent {
+  UserModel user;
+  UpdateUserEvent(this.user);
 }

@@ -18,6 +18,7 @@ class ECommerceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: themeData,
       home: BlocProvider(
         create: (context) {

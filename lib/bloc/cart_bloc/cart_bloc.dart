@@ -177,11 +177,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               .first;
           storeTransaction(
               TransactionModel(
-                productId: item.productId,
-                quantity: item.quantity,
-                price: event.price[i],
-                date: DateTime.now(),
-              ),
+                  productId: item.productId,
+                  quantity: item.quantity,
+                  price: event.price[i],
+                  date: DateTime.now(),
+                  title: ""),
               event.email);
           removeCartData(item.productId, event.email);
           event.items.removeWhere(

@@ -34,7 +34,7 @@ class DatabaseHelper {
       )
     ''');
 
-    // Cart Table
+    // Cart Table+
     await db.execute('''
       CREATE TABLE cart (
         product_id INTEGER,
@@ -57,7 +57,18 @@ class DatabaseHelper {
         FOREIGN KEY (user_id) REFERENCES user_data (email)
       )
     ''');
-
+    await db.execute('''
+  CREATE TABLE products(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT,
+    title TEXT,
+    price REAL,
+    description TEXT,
+    category TEXT,
+    date TEXT,
+    FOREIGN KEY (user_id) REFERENCES user_data (email)
+  )
+''');
     await db.execute('''CREATE TRIGGER cart_quantity_update
          AFTER UPDATE ON cart
          FOR EACH ROW 

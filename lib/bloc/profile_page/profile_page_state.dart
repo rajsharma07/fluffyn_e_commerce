@@ -14,3 +14,5 @@ class FailureState extends ProfilePageState {
   Failure failure;
   FailureState(this.failure);
 }
+
+class InitialState extends ProfilePageState {}

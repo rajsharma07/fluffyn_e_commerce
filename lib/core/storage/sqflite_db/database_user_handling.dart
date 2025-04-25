@@ -18,6 +18,19 @@ Future<UserModel> readUser(String email) async {
   return UserModel.fromMap(result[0]);
 }
 
+Future<void> updateUser(UserModel user) async {
+  final db = await DatabaseHelper.instance.database;
+  db.update(
+    "user_data",
+    {
+      "name": user.name,
+      "phone": user.phone,
+    },
+    where: "email = ?",
+    whereArgs: [user.email],
+  );
+}
+
 Future<void> updateName(String email, String newName) async {
   final db = await DatabaseHelper.instance.database;
   db.update(

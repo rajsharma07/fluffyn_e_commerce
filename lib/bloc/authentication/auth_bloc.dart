@@ -2,6 +2,7 @@ import 'package:fluffyn_e_commerce/bloc/authentication/auth_event.dart';
 import 'package:fluffyn_e_commerce/bloc/authentication/auth_state.dart';
 import 'package:fluffyn_e_commerce/core/error/failures.dart';
 import 'package:fluffyn_e_commerce/core/storage/secured_storage.dart';
+import 'package:fluffyn_e_commerce/core/storage/sqflite_db/database_user_handling.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -58,6 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           } else {
             await SecuredStorage.addCredential(event.email, event.password);
             await SecuredStorage.login(event.email);
+            insertUser(event.email);
             emit(
               SuccessState(event.email),
             );

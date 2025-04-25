@@ -1,3 +1,4 @@
+import 'package:fluffyn_e_commerce/core/http_requests/get_request.dart';
 import 'package:fluffyn_e_commerce/core/storage/sqflite_db/database_helper.dart';
 import 'package:fluffyn_e_commerce/model/cart_item_model.dart';
 import 'package:fluffyn_e_commerce/model/transaction_model.dart';
@@ -76,9 +77,22 @@ Future<List<TransactionModel>> getTransaction(String email) async {
   final db = await DatabaseHelper.instance.database;
   final result =
       await db.query("transactions", where: "user_id = ?", whereArgs: [email]);
+  if (result.isEmpty) {
+    return [];
+  }
+  final res = await GetRequest.getRequest(
+    "https://fakestoreapi.com/products/${result[0]['product_id']}",
+  );
+  String title = "";
+  res.fold(
+    (l) {
+      title = l['title'];
+    },
+    (r) {},
+  );
   return result.map(
     (e) {
-      return TransactionModel.fromMap(e);
+      return TransactionModel.fromMap(e, title);
     },
   ).toList();
 }
